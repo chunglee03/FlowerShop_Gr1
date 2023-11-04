@@ -1,0 +1,36 @@
+﻿@model IEnumerable<adminFlowerShop_Gr1.Models.TblRole>
+@{
+    ViewData["Title"] = "Quản lý quyền truy cập";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Mô tả</th>
+                <th scope="col">#</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.RoleId</th>
+                        <td>@item.RoleName</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <a class="btn btn-primary m-r-5" asp-area="Admin" asp-controller="AdminRoles" asp-action="Details" asp-route-id="@item.RoleId">View</a>
+                            <a class="btn btn-secondary m-r-5" asp-area="Admin" asp-controller="AdminRoles" asp-action="Edit" asp-route-id="@item.RoleId">Edit</a>
+                            <a class="btn btn-success m-r-5" asp-area="Admin" asp-controller="AdminRoles" asp-action="Delete" asp-route-id="@item.RoleId">Delete</a>
+                        </td>
+                    </tr>   
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
