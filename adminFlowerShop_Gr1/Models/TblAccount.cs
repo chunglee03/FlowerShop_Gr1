@@ -21,6 +21,7 @@ namespace adminFlowerShop_Gr1.Models
         public DateTime? LastLogin { get; set; }
         public DateTime? CreateDate { get; set; }
 
+        public virtual TblRole? Role { get; set; }
         public virtual ICollection<TblPost> TblPosts { get; set; }
     }
 }
