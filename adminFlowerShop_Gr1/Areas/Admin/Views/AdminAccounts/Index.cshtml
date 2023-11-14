@@ -1,0 +1,103 @@
+﻿@model IEnumerable<adminFlowerShop_Gr1.Models.TblAccount>
+
+@{
+    ViewData["Title"] = "Danh sách tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+   
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            
+            <span class="breadcrumb-item active">Danh sách tài khoản</span>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="row m-b-30">
+            <div class="col-lg-8">
+                <div class="d-md-flex">
+                    <div class="m-b-10 m-r-15">
+                        <select class="custom-select" id="Idrole" name="Idrole" style="min-width: 200px;" asp-items="ViewBag.QuyenTruyCap">
+                            <option value="0" disabled  selected>Chọn quyền truy cập</option>    
+                        </select>
+                    </div>
+                    <div>
+                        <select class="custom-select" id="Idstatus" name="Idstatus" style="min-width: 200px;" asp-items="ViewBag.IsTrangThai">
+                            <option value="" disabled  selected>Chọn trạng thái</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover e-commerce-table">
+                <thead>
+                    <tr>
+                       
+                        <th>ID</th>
+                        <th>Họ tên</th>
+                        <th>Email</th>
+                        <th>Điện thoại</th>
+                        <th>Lần đăng nhập cuối</th>
+                        <th>Quyền truy cập</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(Model != null)
+                    {
+                        foreach(var item in Model)
+                        {
+                            <tr>
+                                
+                                <td>
+                                    @item.AccountId
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
+                                        <h6 class="m-b-0 m-l-10">@item.FullName</h6>
+                                    </div>
+                                </td>
+                                <td>@item.Email</td>
+                                <td>@item.Phone</td>
+                                <td>@item.LastLogin</td>
+                                <td>@item.Role.Description</td>
+                                <td>
+                                    @if (item.Active)
+                                    {
+                                        <div class="d-flex align-items-center">
+                                        <div class="badge badge-success badge-dot m-r-10"></div>
+                                        <div>Active</div>
+                                    </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-success badge-dot m-r-10"></div>
+                                            <div>Block</div>
+                                        </div>
+                                    }
+                                    
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary m-r-5" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Details" asp-route-id="@item.AccountId">Xem</a>
+                                    <a class="btn btn-secondary m-r-5" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Edit" asp-route-id="@item.AccountId">Sửa</a>
+                                    <a class="btn btn-success m-r-5" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Delete" asp-route-id="@item.AccountId">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    
+                  
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

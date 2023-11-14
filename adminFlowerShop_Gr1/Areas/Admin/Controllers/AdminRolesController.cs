@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using adminFlowerShop_Gr1.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
 {
@@ -13,10 +14,12 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
     public class AdminRolesController : Controller
     {
         private readonly FlowerShop_Group1Context _context;
+        public INotyfService _notifyService { get; }
 
-        public AdminRolesController(FlowerShop_Group1Context context)
+        public AdminRolesController(FlowerShop_Group1Context context, INotyfService notifyService)
         {
             _context = context;
+            _notifyService = notifyService;
         }
 
         // GET: Admin/AdminRoles
@@ -101,12 +104,14 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
                 {
                     _context.Update(tblRole);
                     await _context.SaveChangesAsync();
+                    _notifyService.Success("Cập nhật thành công");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!TblRoleExists(tblRole.RoleId))
                     {
                         return NotFound();
+                        _notifyService.Success("Có lỗi");
                     }
                     else
                     {
@@ -142,7 +147,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.TblRoles == null)
-            {
+            {   
                 return Problem("Entity set 'FlowerShop_Group1Context.TblRoles'  is null.");
             }
             var tblRole = await _context.TblRoles.FindAsync(id);
@@ -152,6 +157,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
             }
             
             await _context.SaveChangesAsync();
+            _notifyService.Success("Xóa quyền truy cập thành công");
             return RedirectToAction(nameof(Index));
         }
 
