@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using adminFlowerShop_Gr1.Models;
 using PagedList.Core;
+using adminFlowerShop_Gr1.Helpper;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
 {
@@ -14,10 +16,16 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
     public class AdminProductsController : Controller
     {
         private readonly FlowerShop_Group1Context _context;
+        public INotyfService _notifyService { get; }
 
-        public AdminProductsController(FlowerShop_Group1Context context)
+        private object fThumb;
+        private object fThum;
+        private string extension;
+
+        public AdminProductsController(FlowerShop_Group1Context context, INotyfService notifyService)
         {
             _context = context;
+            _notifyService = notifyService;
         }
 
         // GET: Admin/AdminProducts
@@ -104,8 +112,20 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                tblProduct.ProductName = Utilities.ToTitlecase(tblProduct.ProductName);
+                if (fThumb != null)
+                { 
+                    
+                    string image = Utilities.SEOUrl(tblProduct.ProductName) + extension;
+                    tblProduct.Thumb = await Utilities.UploadFile(fThumb, @"products", image.ToLower());
+                }
+                if (string.IsNullOrEmpty(tblProduct.Thumb)) tblProduct.Thumb = "default.jpg";
+                tblProduct.Alias = Utilities.SEOUrl(tblProduct.ProductName);
+                tblProduct.DateModified = DateTime.Now;
+                tblProduct.DateCreated = DateTime.Now;
                 _context.Add(tblProduct);
                 await _context.SaveChangesAsync();
+                _notifyService.Success("Cập nhật thành công");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DanhMuc"] = new SelectList(_context.TblCategories, "CatId", "CatName", tblProduct.CatId);
@@ -127,6 +147,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
             }
             ViewData["DanhMuc"] = new SelectList(_context.TblCategories, "CatId", "CatName", tblProduct.CatId);
             return View(tblProduct);
+            
         }
 
         // POST: Admin/AdminProducts/Edit/5
@@ -134,7 +155,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ShortDesc,Description,CatId,Price,Discount,Thumb,Video,DateCreated,DateModified,BestSellers,HomeFlag,Active,Tags,Title,Alias,MetaDesc,MetaKey,UnitsInStock")] TblProduct tblProduct)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ShortDesc,Description,CatId,Price,Discount,Thumb,Video,DateCreated,DateModified,BestSellers,HomeFlag,Active,Tags,Title,Alias,MetaDesc,MetaKey,UnitsInStock")] TblProduct tblProduct,Microsoft.AspNetCore.Http.IFormFile fThumb)
         {
             if (id != tblProduct.ProductId)
             {
@@ -143,9 +164,22 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+
                 try
                 {
+
+                    tblProduct.ProductName = Utilities.ToTitlecase(tblProduct.ProductName);
+                    if (fThumb != null)
+                    {
+
+                        string image = Utilities.SEOUrl(tblProduct.ProductName) + extension;
+                        tblProduct.Thumb = await Utilities.UploadFile(fThumb, @"products", image.ToLower());
+                    }
+                    if (string.IsNullOrEmpty(tblProduct.Thumb)) tblProduct.Thumb = "default.jpg";
+                    tblProduct.Alias = Utilities.SEOUrl(tblProduct.ProductName);
+                    tblProduct.DateModified = DateTime.Now;
                     _context.Update(tblProduct);
+                    _notifyService.Success("Cập nhật thành công");
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -200,6 +234,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
             }
             
             await _context.SaveChangesAsync();
+            _notifyService.Success("Xóa thành công");
             return RedirectToAction(nameof(Index));
         }
 

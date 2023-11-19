@@ -3,6 +3,32 @@
     ViewData["Title"] = "Quản lý quyền truy cập";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+<div class="row m-b-30">
+    <div class="col-lg-8">
+        <div class="d-md-flex">
+            <div class="m-b-10 m-r-15">
+                <select class="custom-select" id="CatID" name="CatID" style="min-width: 200px;" asp-items="ViewBag.DanhMuc">
+                    <option selected>Chọn danh mục   </option>
+
+                    <option value="0">Chọn tất cả</option>
+
+                </select>
+            </div>
+            @* <div class="m-b-10">
+            <select class="custom-select" style="min-width: 180px;">
+            <option selected>Status</option>
+            <option value="all">All</option>
+            <option value="inStock">In Stock </option>
+            <option value="outOfStock">Out of Stock</option>
+            </select>
+            </div> *@
+        </div>
+    </div>
+    <div class="col-lg-4 text-right">
+        <a class="btn btn-primary" asp-controller="AdminRoles" asp-action="Create"><i class="anticon anticon-plus-circle m-r-5"></i><span> Thêm quyền truy cập</span></a>
+
+    </div>
+</div>
 <div class="table-responsive">
     <table class="table">
         <thead>

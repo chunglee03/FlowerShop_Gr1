@@ -1,0 +1,102 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<adminFlowerShop_Gr1.Models.TblPost>
+@{
+    ViewData["Title"] = "Danh sách tin tức";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+
+            <span class="breadcrumb-item active">Danh sách tin tức :page @ViewBag.CurrentPage</span>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+            <div class="row m-b-30">
+                <div class="col-lg-8">
+                    <div class="d-md-flex">
+                        <div class="m-b-10 m-r-15">
+                            <select class="custom-select" id="CatID" name="CatID" style="min-width: 200px;" asp-items="ViewBag.DanhMuc">
+                                <option selected>Chọn danh mục   </option>
+
+                                <option value="0">Chọn tất cả</option>
+
+                            </select>
+                        </div>
+                        @* <div class="m-b-10">
+                        <select class="custom-select" style="min-width: 180px;">
+                        <option selected>Status</option>
+                        <option value="all">All</option>
+                        <option value="inStock">In Stock </option>
+                        <option value="outOfStock">Out of Stock</option>
+                        </select>
+                        </div> *@
+                    </div>
+                </div>
+                <div class="col-lg-4 text-right">
+                <a class="btn btn-primary" asp-controller="AdminTblPosts" asp-action="Create"><i class="anticon anticon-plus-circle m-r-5"></i><span> Thêm tin tức</span></a>
+
+                </div>
+            </div>
+        <div class="table-responsive">
+            <table class="table table-hover e-commerce-table">
+                <thead>
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Tiêu đề</th>
+                        <th>Trạng Thái</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>@item.PostId</td>
+                                <td>
+                                    @item.Title
+                                </td>
+                                <td>
+                                    @if (item.Published == true)
+                                    {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-success badge-dot m-r-10"></div>
+                                            <div>Public</div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-success badge-dot m-r-10"></div>
+                                            <div>Non-Public</div>
+                                        </div>
+                                    }
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary m-r-5" asp-area="Admin" asp-controller="AdminTblPosts" asp-action="Details" asp-route-id="@item.PostId">View</a>
+                                    <a class="btn btn-secondary m-r-5" asp-area="Admin" asp-controller="AdminTblPosts" asp-action="Edit" asp-route-id="@item.PostId">Edit</a>
+                                    <a class="btn btn-success m-r-5" asp-area="Admin" asp-controller="AdminTblPosts" asp-action="Delete" asp-route-id="@item.PostId">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+            <div aria-label="Page navigation example">
+                <ul class=" pagination">
+                    <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminTblPosts" asp-action="Index" />
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
