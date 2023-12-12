@@ -21,26 +21,19 @@
             <div class="col-lg-8">
                 <div class="d-md-flex">
                     <div class="m-b-10 m-r-15">
-                        <select class="custom-select" id="CatID" name="CatID" style="min-width: 200px;" asp-items="ViewBag.DanhMuc">
-							<option selected>Chọn danh mục   </option>
-							    
+                        <select class="custom-select" id="txtCatID" name="txtCatID" style="min-width: 200px;" asp-items="ViewBag.DanhMuc">
+                            <option selected>Chọn danh mục</option>
+
                             <option value="0">Chọn tất cả</option>
-                            
+
                         </select>
                     </div>
-                    @* <div class="m-b-10">
-                        <select class="custom-select" style="min-width: 180px;">
-                            <option selected>Status</option>
-                            <option value="all">All</option>
-                            <option value="inStock">In Stock </option>
-                            <option value="outOfStock">Out of Stock</option>
-                        </select>
-                    </div> *@
+
                 </div>
             </div>
             <div class="col-lg-4 text-right">
-				<a class="btn btn-primary" asp-controller="AdminProducts" asp-action="Create" ><i class="anticon anticon-plus-circle m-r-5"></i><span> Thêm sản phẩm</span></a>
-                
+                <a class="btn btn-primary" asp-controller="AdminProducts" asp-action="Create"><i class="anticon anticon-plus-circle m-r-5"></i><span> Thêm sản phẩm</span></a>
+
             </div>
         </div>
         <div class="table-responsive">
@@ -50,7 +43,7 @@
 
                         <th>ID</th>
                         <th>Tên sản phẩm</th>
-                        @* <th>Danh mục</th> *@
+                        <th>Danh mục</th>
                         <th>Giá</th>
                         <th>Tồn kho</th>
                         <th>Trạng thái</th>
@@ -58,58 +51,61 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model != null)
-                    {
-                        foreach (var item in Model)
-                        {
-                            <tr>
+                    @* @if (Model != null) *@
 
-                                <td>
-                                    @item.ProductId
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
-                                        <h6 class="m-b-0 m-l-10">@item.ProductName</h6>
-                                    </div>
-                                </td>
-
-                                
-                              @*   <td>
-                                    @item.Cat.CatName
-                                </td> *@
-                                <td>
-                                    @item.Price.Value.ToString("#,##0") VNĐ
-                                </td>
-								<td>
-
-									<p>@item.Discount</p>
-								</td>
-                                <td>
-                                    @if (item.UnitsInStock.Value >0)
-                                    {
-                                        <div class="d-flex align-items-center">
-                                            <div class="badge badge-success badge-dot m-r-10"></div>
-                                            <div>In Stock</div>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="d-flex align-items-center">
-                                            <div class="badge badge-success badge-dot m-r-10"></div>
-                                            <div> Out Stock</div>
-                                        </div>
-                                    }
-
-                                </td>
-                                <td>
-                                    <a class="btn btn-primary m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.ProductId">View</a>
-                                    <a class="btn btn-secondary m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a>
-                                    <a class="btn btn-success m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
-                                </td>
-                            </tr>
-                        }
+                    @{
+                        int a = 1;
                     }
+                    @foreach (var item in Model)
+                    {
+                        <tr id="tr_@item.ProductId">
+                            @*  <td>
+                        @item.ProductId
+                        </td> *@
+                            <td>@(a++)</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
+                                    <h6 class="m-b-0 m-l-10">@item.ProductName</h6>
+                                </div>
+                            </td>
+
+                            <td>
+                                @item.Cat.CatName
+                            </td>
+
+                            <td>
+                                @item.Price.Value.ToString("#,##0") VNĐ
+                            </td>
+                            <td>
+
+                                <p>@item.Discount</p>
+                            </td>
+                            <td>
+                                @if (item.UnitsInStock.Value > 0)
+                                {
+                                    <div class="d-flex align-items-center">
+                                        <div class="badge badge-success badge-dot m-r-10"></div>
+                                        <div>In Stock</div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="d-flex align-items-center">
+                                        <div class="badge badge-success badge-dot m-r-10"></div>
+                                        <div> Out Stock</div>
+                                    </div>
+                                }
+
+                            </td>
+                            <td>
+                                <a class="btn btn-primary m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.ProductId">View</a>
+                                <a class="btn btn-secondary m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a>
+                                <a class="btn btn-success m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+
 
 
                 </tbody>
@@ -122,24 +118,27 @@
         </div>
     </div>
 </div>
+
+
+
 @section Scripts{
-   
+
     <script>
         $(document).ready(function () {
 
             jQuery("#txtCatID").change(function () {
-                var CatID = jQuery(this).children("selected").attr("value");
-                CatID = parseFloat(CatID);
-                $('#txtCatID option'
-                .removeAttr('selected');
-                $("##txtCatID>[ value=" + CatID + "]").attr("selected", "true");
-                
+                var catID = jQuery(this).children(":selected").attr("value");
+                CatID = parseFloat(catID);
+                $('#txtCatID option')
+                    .removeAttr('selected');
+                $("#txtCatID > [ value=" + catID + "]").attr("selected", "true");
+
                 $.ajax({
-                    url:'/Admin/AdminProducts/filtter',
-                    datatype: "json"
-                    type: "GET"
-                    data:{
-                        CatID
+                    url: '/Admin/AdminProducts/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        CatID: catID
                     },
                     async: true,
                     success: function (results) {
@@ -147,13 +146,13 @@
                             window.location.href = results.redirectUrl;
                         }
                     },
-                    Error: function (xhr) {
+                    error: function (xhr) {
                         alert('error');
                     }
-                })
-            })
+                });
+            });
 
-        })
+        });
     </script>
 }
 

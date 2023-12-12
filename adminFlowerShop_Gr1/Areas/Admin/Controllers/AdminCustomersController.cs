@@ -39,6 +39,17 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
             return View(models);
 
         }
+
+        public IActionResult Filtter(int CustomerId = 0)
+        {
+
+            var url = $"/Admin/AdminCustomers?CustomerId={CustomerId}";
+            if (CustomerId == 0)
+            {
+                url = $"/Admin/AdminCustomers";
+            }
+            return Json(new { status = "success", RedirectUrl = url });
+        }
         // GET: Admin/AdminCustomers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -61,7 +72,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
         // GET: Admin/AdminCustomers/Create
         public IActionResult Create()
         {
-            ViewData["LocationId"] = new SelectList(_context.TblLocations, "LocationId", "LocationId");
+            ViewData["LocationId"] = new SelectList(_context.TblLocations, "LocationId", "Name");
             return View();
         }
 
@@ -78,7 +89,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LocationId"] = new SelectList(_context.TblLocations, "LocationId", "LocationId", tblCustomer.LocationId);
+            ViewData["LocationId"] = new SelectList(_context.TblLocations, "LocationId", "Name", tblCustomer.LocationId);
             return View(tblCustomer);
         }
 
@@ -95,7 +106,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["LocationId"] = new SelectList(_context.TblLocations, "LocationId", "LocationId", tblCustomer.LocationId);
+            ViewData["LocationId"] = new SelectList(_context.TblLocations, "LocationId", "Name", tblCustomer.LocationId);
             return View(tblCustomer);
         }
 
@@ -131,7 +142,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LocationId"] = new SelectList(_context.TblLocations, "LocationId", "LocationId", tblCustomer.LocationId);
+            ViewData["LocationId"] = new SelectList(_context.TblLocations, "LocationId", "Name", tblCustomer.LocationId);
             return View(tblCustomer);
         }
 

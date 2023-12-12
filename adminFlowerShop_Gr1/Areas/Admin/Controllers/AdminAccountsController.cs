@@ -219,7 +219,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
             ViewData["QuyenTruyCap"] = new SelectList(_context.TblRoles, "RoleId", "Description");
 
             List<SelectListItem> IsTrangThai = new List<SelectListItem>();
-            //List<SelectListItem> IsTrangThai = new List<SelectListItem>();
+            
             IsTrangThai.Add(new SelectListItem() { Text = "Active", Value = "1" });
             IsTrangThai.Add(new SelectListItem() { Text = "Block", Value = "0" });
             ViewData["IsTrangThai"] = IsTrangThai;

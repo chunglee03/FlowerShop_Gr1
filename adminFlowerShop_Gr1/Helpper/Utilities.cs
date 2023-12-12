@@ -54,5 +54,9 @@
         {
             throw new NotImplementedException();
         }
+        public static string getCurrentDate()
+        {
+            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
     }
 }

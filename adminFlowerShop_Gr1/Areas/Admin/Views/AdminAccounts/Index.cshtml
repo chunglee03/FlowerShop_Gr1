@@ -34,6 +34,7 @@
             </div>
             
         </div>
+        
         <div class="table-responsive">
             <table class="table table-hover e-commerce-table">
                 <thead>
@@ -50,15 +51,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(Model != null)
-                    {
-                        foreach(var item in Model)
+                    @{
+                        int a = 1;
+                    }
+                    
+                        @foreach(var item in Model)
                         {
-                            <tr>
-                                
-                                <td>
-                                    @item.AccountId
-                                </td>
+                        <tr id="tr_@item.AccountId">
+
+                            <td>@(a++)</td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
@@ -93,7 +94,7 @@
                                 </td>
                             </tr>
                         }
-                    }
+                    
                     
                   
                 </tbody>
