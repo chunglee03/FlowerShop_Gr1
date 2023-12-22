@@ -18,17 +18,24 @@
 <div class="card">
     <div class="card-body">
         <div class="row m-b-30">
-            <div class="col-lg-8">
-                <div class="d-md-flex">
-                    <div class="m-b-10 m-r-15">
-                        <select class="custom-select" id="txtCatID" name="txtCatID" style="min-width: 200px;" asp-items="ViewBag.DanhMuc">
-                            <option selected>Chọn danh mục</option>
-
-                            <option value="0">Chọn tất cả</option>
-
-                        </select>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-affix m-v-10">
+                            <i class="prefix-icon anticon anticon-search opacity-04"></i>
+                            <input id="keyword" name="keyword" type="text" class="form-control" placeholder="Tìm kiếm sản phẩm">
+                        </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="input-affix m-v-10">
+                            <select class="custom-select" id="txtCatID" name="txtCatID" style="min-width: 200px;" asp-items="ViewBag.DanhMuc">
+                                <option selected>Chọn danh mục</option>
 
+                                <option value="0">Chọn tất cả</option>
+
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 text-right">
@@ -50,7 +57,7 @@
                         <th>#</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="records_table">
                     @* @if (Model != null) *@
 
                     @{
@@ -77,9 +84,9 @@
                             <td>
                                 @item.Price.Value.ToString("#,##0") VNĐ
                             </td>
+                                @item.UnitsInStock.Value
                             <td>
 
-                                <p>@item.Discount</p>
                             </td>
                             <td>
                                 @if (item.UnitsInStock.Value > 0)
@@ -96,7 +103,6 @@
                                         <div> Out Stock</div>
                                     </div>
                                 }
-
                             </td>
                             <td>
                                 <a class="btn btn-primary m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.ProductId">View</a>
@@ -152,6 +158,23 @@
                 });
             });
 
+            $("#keyword").keyup(function () {
+                var strkeyword = $('#keyword').val();
+                $.ajax({
+                    url: '/Admin/Search/FindProduct/',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error')
+                    }
+                });
+            });
         });
     </script>
 }

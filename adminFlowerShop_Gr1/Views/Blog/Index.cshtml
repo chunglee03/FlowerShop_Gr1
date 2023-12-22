@@ -1,319 +1,105 @@
-﻿
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<adminFlowerShop_Gr1.Models.TblPost>
 @{
-    ViewData["Title"] = "Blog Index";
+    ViewData["Title"] = "Bài viết - " + ViewBag.CurrentPage;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int PageCurrent = ViewBag.CurrentPage;
+    int PageNext = PageCurrent + 1;
 }
 
-    <!-- Breadcrumb Area Start Here -->
-    <div class="breadcrumbs-area position-relative">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <div class="breadcrumb-content position-relative section-content">
-                        <h3 class="title-3">Blog Grid Fullwidth</h3>
-                        <ul>
-                            <li><a href="/">Home</a></li>
-                            <li>Blog</li>
-                        </ul>
-                    </div>
+<!-- Breadcrumb Area Start Here -->
+<div class="breadcrumbs-area position-relative">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="breadcrumb-content position-relative section-content">
+                    <h3 class="title-3">Blog Grid Fullwidth</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li>Bài viết</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Breadcrumb Area End Here -->
-    <!-- Blog Main Area Start Here -->
-    <div class="blog-main-area">
-        <div class="container container-default custom-area">
-            <div class="row">
-                <div class="col-lg-12 col-12 col-custom widget-mt">
-                    <!-- Shop Wrapper Start -->
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
-                            <div class="blog-lst">
-                                <div class="single-blog">
-                                    <div class="blog-image">
-                                        <a class="d-block" href="blog-details-fullwidth.html">
-                                            <img src="~/assets/images/blog/blog1.jpg" alt="Blog Image" class="w-100">
-                                        </a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-text">
-                                            <h4><a href="blog-details-fullwidth.html">Standard blog post title</a></h4>
-                                            <div class="blog-post-info">
-                                                <span><a href="#">By admin</a></span>
-                                                <span>December 18, 2022</span>
+</div>
+<!-- Breadcrumb Area End Here -->
+<!-- Blog Main Area Start Here -->
+<div class="blog-main-area">
+    <div class="container container-default custom-area">
+        <div class="row">
+            <div class="col-lg-12 col-12 col-custom widget-mt">
+                <!-- Shop Wrapper Start -->
+                <div class="row">
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            string url = $"/bai-viet/{item.Alias}-{item.PostId}.html";
+                            <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
+                                <div class="blog-lst">
+                                    <div class="single-blog">
+                                        <div class="blog-image">
+                                            <a class="d-block" href="@url">
+                                                <img src="~/images/post/@item.Thumb" alt="@item.Title" class="w-100">
+                                            </a>
+                                        </div>
+                                        <div class="blog-content">
+                                            <div class="blog-text">
+                                                <h4><a href="@url">@item.Title</a></h4>
+                                                <div class="blog-post-info">
+                                                    <span><a href="@url">By admin</a></span>
+                                                    <span>@item.CreatedDate.Value.ToShortDateString</span>
+                                                </div>
+                                                <p>@item.Scontents</p>
+                                                <a href="@url" class="readmore">Xem thêm <i class="fa fa-long-arrow-right"></i></a>
                                             </div>
-                                            <p>Lorem ipsu dolor sit amet cons elits cumque adipisicing, sed do incid eiusmod tempor ut labore et dolore eveniet .</p>
-                                            <a href="blog-details-fullwidth.html" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
-                            <div class="blog-lst">
-                                <div class="single-blog">
-                                    <div class="blog-image">
-                                        <a class="d-block" href="blog-details-fullwidth.html">
-                                            <img src="~/assets/images/blog/blog3.jpg" alt="Blog Image" class="w-100">
-                                        </a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-text">
-                                            <h4><a href="blog-details-fullwidth.html">Standard blog post title</a></h4>
-                                            <div class="blog-post-info">
-                                                <span><a href="#">By admin</a></span>
-                                                <span>December 18, 2022</span>
-                                            </div>
-                                            <p>Lorem ipsu dolor sit amet cons elits cumque adipisicing, sed do incid eiusmod tempor ut labore et dolore eveniet .</p>
-                                            <a href="blog-details-fullwidth.html" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
-                            <div class="blog-lst">
-                                <div class="single-blog">
-                                    <div class="blog-image">
-                                        <a class="d-block" href="blog-details-fullwidth.html">
-                                            <img src="~/assets/images/blog/blog2.jpg" alt="Blog Image" class="w-100">
-                                        </a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-text">
-                                            <h4><a href="blog-details-fullwidth.html">Standard blog post title</a></h4>
-                                            <div class="blog-post-info">
-                                                <span><a href="#">By admin</a></span>
-                                                <span>December 18, 2022</span>
-                                            </div>
-                                            <p>Lorem ipsu dolor sit amet cons elits cumque adipisicing, sed do incid eiusmod tempor ut labore et dolore eveniet .</p>
-                                            <a href="blog-details-fullwidth.html" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
-                            <div class="blog-lst">
-                                <div class="single-blog">
-                                    <div class="blog-image">
-                                        <a class="d-block" href="blog-details-fullwidth.html">
-                                            <img src="~/assets/images/blog/blog3.jpg" alt="Blog Image" class="w-100">
-                                        </a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-text">
-                                            <h4><a href="blog-details-fullwidth.html">Standard blog post title</a></h4>
-                                            <div class="blog-post-info">
-                                                <span><a href="#">By admin</a></span>
-                                                <span>December 18, 2022</span>
-                                            </div>
-                                            <p>Lorem ipsu dolor sit amet cons elits cumque adipisicing, sed do incid eiusmod tempor ut labore et dolore eveniet .</p>
-                                            <a href="blog-details-fullwidth.html" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
-                            <div class="blog-lst">
-                                <div class="single-blog">
-                                    <div class="blog-image">
-                                        <a class="d-block" href="blog-details-fullwidth.html">
-                                            <img src="~/assets/images/blog/blog1.jpg" alt="Blog Image" class="w-100">
-                                        </a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-text">
-                                            <h4><a href="blog-details-fullwidth.html">Standard blog post title</a></h4>
-                                            <div class="blog-post-info">
-                                                <span><a href="#">By admin</a></span>
-                                                <span>December 18, 2022</span>
-                                            </div>
-                                            <p>Lorem ipsu dolor sit amet cons elits cumque adipisicing, sed do incid eiusmod tempor ut labore et dolore eveniet .</p>
-                                            <a href="blog-details-fullwidth.html" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
-                            <div class="blog-lst">
-                                <div class="single-blog">
-                                    <div class="blog-image">
-                                        <a class="d-block" href="blog-details-fullwidth.html">
-                                            <img src="~/assets/images/blog/blog2.jpg" alt="Blog Image" class="w-100">
-                                        </a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-text">
-                                            <h4><a href="blog-details-fullwidth.html">Standard blog post title</a></h4>
-                                            <div class="blog-post-info">
-                                                <span><a href="#">By admin</a></span>
-                                                <span>December 18, 2022</span>
-                                            </div>
-                                            <p>Lorem ipsu dolor sit amet cons elits cumque adipisicing, sed do incid eiusmod tempor ut labore et dolore eveniet .</p>
-                                            <a href="blog-details-fullwidth.html" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
-                            <div class="blog-lst">
-                                <div class="single-blog">
-                                    <div class="blog-image">
-                                        <a class="d-block" href="blog-details-fullwidth.html">
-                                            <img src="~/assets/images/blog/blog2.jpg" alt="Blog Image" class="w-100">
-                                        </a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-text">
-                                            <h4><a href="blog-details-fullwidth.html">Standard blog post title</a></h4>
-                                            <div class="blog-post-info">
-                                                <span><a href="#">By admin</a></span>
-                                                <span>December 18, 2022</span>
-                                            </div>
-                                            <p>Lorem ipsu dolor sit amet cons elits cumque adipisicing, sed do incid eiusmod tempor ut labore et dolore eveniet .</p>
-                                            <a href="blog-details-fullwidth.html" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
-                            <div class="blog-lst">
-                                <div class="single-blog">
-                                    <div class="blog-image">
-                                        <a class="d-block" href="blog-details-fullwidth.html">
-                                            <img src="~/assets/images/blog/blog3.jpg" alt="Blog Image" class="w-100">
-                                        </a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-text">
-                                            <h4><a href="blog-details-fullwidth.html">Standard blog post title</a></h4>
-                                            <div class="blog-post-info">
-                                                <span><a href="#">By admin</a></span>
-                                                <span>December 18, 2022</span>
-                                            </div>
-                                            <p>Lorem ipsu dolor sit amet cons elits cumque adipisicing, sed do incid eiusmod tempor ut labore et dolore eveniet .</p>
-                                            <a href="blog-details-fullwidth.html" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
-                            <div class="blog-lst">
-                                <div class="single-blog">
-                                    <div class="blog-image">
-                                        <a class="d-block" href="blog-details-fullwidth.html">
-                                            <img src="~/assets/images/blog/blog1.jpg" alt="Blog Image" class="w-100">
-                                        </a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-text">
-                                            <h4><a href="blog-details-fullwidth.html">Standard blog post title</a></h4>
-                                            <div class="blog-post-info">
-                                                <span><a href="#">By admin</a></span>
-                                                <span>December 18, 2022</span>
-                                            </div>
-                                            <p>Lorem ipsu dolor sit amet cons elits cumque adipisicing, sed do incid eiusmod tempor ut labore et dolore eveniet .</p>
-                                            <a href="blog-details-fullwidth.html" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
-                            <div class="blog-lst">
-                                <div class="single-blog">
-                                    <div class="blog-image">
-                                        <a class="d-block" href="blog-details-fullwidth.html">
-                                            <img src="~/assets/images/blog/blog1.jpg" alt="Blog Image" class="w-100">
-                                        </a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-text">
-                                            <h4><a href="blog-details-fullwidth.html">Standard blog post title</a></h4>
-                                            <div class="blog-post-info">
-                                                <span><a href="#">By admin</a></span>
-                                                <span>December 18, 2022</span>
-                                            </div>
-                                            <p>Lorem ipsu dolor sit amet cons elits cumque adipisicing, sed do incid eiusmod tempor ut labore et dolore eveniet .</p>
-                                            <a href="blog-details-fullwidth.html" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
-                            <div class="blog-lst">
-                                <div class="single-blog">
-                                    <div class="blog-image">
-                                        <a class="d-block" href="blog-details-fullwidth.html">
-                                            <img src="~/assets/images/blog/blog2.jpg" alt="Blog Image" class="w-100">
-                                        </a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-text">
-                                            <h4><a href="blog-details-fullwidth.html">Standard blog post title</a></h4>
-                                            <div class="blog-post-info">
-                                                <span><a href="#">By admin</a></span>
-                                                <span>December 18, 2022</span>
-                                            </div>
-                                            <p>Lorem ipsu dolor sit amet cons elits cumque adipisicing, sed do incid eiusmod tempor ut labore et dolore eveniet .</p>
-                                            <a href="blog-details-fullwidth.html" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-custom mb-30">
-                            <div class="blog-lst">
-                                <div class="single-blog">
-                                    <div class="blog-image">
-                                        <a class="d-block" href="blog-details-fullwidth.html">
-                                            <img src="~/assets/images/blog/blog3.jpg" alt="Blog Image" class="w-100">
-                                        </a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-text">
-                                            <h4><a href="blog-details-fullwidth.html">Standard blog post title</a></h4>
-                                            <div class="blog-post-info">
-                                                <span><a href="#">By admin</a></span>
-                                                <span>December 18, 2022</span>
-                                            </div>
-                                            <p>Lorem ipsu dolor sit amet cons elits cumque adipisicing, sed do incid eiusmod tempor ut labore et dolore eveniet .</p>
-                                            <a href="blog-details-fullwidth.html" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Shop Wrapper End -->
-                    <!-- Bottom Toolbar Start -->
-                    <div class="row">
-                        <div class="col-sm-12 col-custom">
-                            <div class="toolbar-bottom">
-                                <div class="pagination">
-                                    <ul>
-                                        <li class="current">1</li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li class="next"><a href="#">next</a></li>
-                                        <li><a href="#">&gt;&gt;</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Bottom Toolbar End -->
+                        }
+                    }
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- Blog Main Area End Here -->
+                <!-- Shop Wrapper End -->
+                <!-- Bottom Toolbar Start -->
+                <div class="row">
+                    <div class="col-sm-12 col-custom">
+                        <div class="toolbar-bottom">
+                            <div class="paginatiom">
+                                <ul class="pagination">
+                                    @if (PageCurrent > 1)
+                                    {
+                                        <li>
+                                            <a href="/blog.html?page=@(PageCurrent-1)" aria-label="Previous">
+                                                <span class="fa fa-chevron-left"></span>
+                                            </a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="/blog.html" aria-label="Previous">
+                                                <span class="fa fa-chevron-left"></span>
+                                            </a>
+                                        </li>
+                                    }
 
+                                    <li class="current"><a href="/blog.html?page=@PageCurrent">@PageCurrent</li>
+                                    <li><a href="/blog.html?page=@PageNext">@PageNext</a></li>
+                                    <li>
+                                        <a href="/blog.html?page=@PageNext" aria-label="Next">
+                                            <span class="fa fa-chevron-right"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bottom Toolbar End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Blog Main Area End Here -->

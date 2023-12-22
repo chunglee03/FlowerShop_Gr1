@@ -1,7 +1,7 @@
 ﻿@model adminFlowerShop_Gr1.Models.TblProduct
 
 @{
-    ViewData["Title"] = "Thông tin sản phẩm";
+    ViewData["Title"] = "Thông tin sản phẩm" + Model.ProductName;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -11,13 +11,13 @@
         <nav class="breadcrumb breadcrumb-dash">
             <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
             <a class="breadcrumb-item" asp-area="Admin" asp-controller="AdminProducts" asp-action="Index">Danh sách sản phẩm</a>
-            <span class="breadcrumb-item active">Thông tin quyền sản phẩm : @Model.ProductName</span>
+            <span class="breadcrumb-item active">Thông tin sản phẩm : @Model.ProductName</span>
         </nav>
     </div>
 </div>
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">Thông tin quyền truy cập</h4>
+        <h4 class="card-title">Thông tin sản phẩm : @Model.ProductName</h4>
         <div class="table-responsive">
             <table class="product-info-table m-t-20">
                 <tbody>
@@ -42,13 +42,17 @@
                         <td>@Model.Discount</td>
                     </tr>
                     <tr>
+                        <td>Danh mục:</td>
+                        <td>@Model.Cat.CatName</td>
+                    </tr>
+                    <tr>
                         <td>Active:</td>
                         <td>
                             @if (@Model.Active)
                             {
                                 <div class="switch m-r-10">
                                     <input type="checkbox" id="switch-1" checked="">
-                                    <label for="switch-2"></label>
+                                    <label for="switch-1"></label>
                                 </div>
                             }
                             else
@@ -100,7 +104,7 @@
                     </tr>
 
                     <tr>
-                        <td>Ngày học:</td>
+                        <td>Ngày tạo:</td>
                         <td>@Model.DateCreated</td>
                     </tr>
 
@@ -114,10 +118,6 @@
                     </tr>
                     <tr>
                         <td>Tiêu đề:</td>
-                        <td>@Model.Title</td>
-                    </tr>
-                    <tr>
-                        <td>Tiêu đề :</td>
                         <td>@Model.Title</td>
                     </tr>
                     <tr>
@@ -147,8 +147,7 @@
                         <td>
                             <form asp-controller="AdminProducts" asp-action="Delete" asp-route-id="@Model.ProductId">
                                 <input type="hidden" asp-for="ProductId" />
-                                <input type="submit" value="Xác nhận xóa" class="btn btn-danger" /> |
-                                
+                                <input type="submit" value="Xác nhận xóa" class="btn btn-danger" />
                             </form>
                         </td>
                     </tr>
@@ -157,8 +156,3 @@
         </div>
     </div>
 </div>
-
-
-
-
-

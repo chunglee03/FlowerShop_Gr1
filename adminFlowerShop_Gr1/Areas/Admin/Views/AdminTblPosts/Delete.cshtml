@@ -1,118 +1,108 @@
 ﻿@model adminFlowerShop_Gr1.Models.TblPost
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Xác nhận xóa bài viết : " + Model.Title;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>TblPost</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Scontents)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Scontents)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Contents)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Contents)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Thumb)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Thumb)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Published)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Published)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Alias)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Alias)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Author)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tags)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tags)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsHot)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsHot)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsNewFeed)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsNewFeed)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MetaKey)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MetaKey)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MetaDesc)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MetaDesc)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Views)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Views)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Account)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Account.AccountId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cat)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cat.CatId)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="PostId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <a class="breadcrumb-item" asp-area="Admin" asp-controller="AdminTblPosts" asp-action="Index">Danh sách bài viết</a>
+            <span class="breadcrumb-item active">Thông tin bài viết : @Model.Title</span>
+        </nav>
+    </div>
 </div>
+
+<div class="page-header no-gutters has-tab">
+    <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+        <div class="media align-items-center m-b-15">
+            <div class="avatar avatar-image rounded" style="height: 70px; width: 70px">
+                <img src="~/images/post/@Model.Thumb" alt="@Model.Title">
+            </div>
+            <div class="m-1-15">
+                <h4 class="m-b-0">@Model.Title</h4>
+                <p class="text-muted m-b-0">ID: #@Model.PostId</p>
+            </div>
+        </div>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#product-overview">Overview</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#product-images">Post Images</a>
+        </li>
+    </ul>
+</div>
+<div class="container-fluid">
+    <div class="tab-content m-t-15">
+        <div class="tab-pane fade show active" id="product-overview">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Xác nhận xóa Page : @Model.Title</h4>
+                    <div class="table-responsive">
+                        <form asp-action="Delete" asp-route-id="@Model.PostId">
+                            <input type="hidden" asp-for="PostId" />
+                            <table class="product-info-table m-t-20">
+                                <tbody>
+                                    <tr>
+                                        <td>Title:</td>
+                                        <td class="text-dark font-weight-semibold">@Model.Title</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Alias:</td>
+                                        <td>@Model.Alias</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Trạng Thái:</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <input asp-for="Published" type="checkbox">
+                                                <label for="Published">Public</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Xác nhận xóa bài viết</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <input type="submit" value="Xóa" class="btn btn-danger" /> 
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Nội dung bài viết</h4>
+                </div>
+                <div class="card-body">
+                    @Html.Raw(Model.Contents)
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="product-images">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img class="img-fluid" src="~/images/post/@Model.Thumb" alt="@Model.Title">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

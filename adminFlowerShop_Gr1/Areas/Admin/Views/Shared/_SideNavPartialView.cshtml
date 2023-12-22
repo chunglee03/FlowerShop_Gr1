@@ -147,7 +147,7 @@
                         <a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Index">Quản lý tài khoản</a>
                     </li>
                     <li>
-                        <a href="basic-table.html">Quản lý danh mục</a>
+                        <a asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">Quản lý danh mục</a>
                     </li>
                     <li>
                         <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">Quản lý quyền truy cập</a>
@@ -157,37 +157,21 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="javascript:void(0);">
+            <li class="nav-item">
+                <a class="dropdown-toggle" asp-area="Admin" asp-controller="AdminTblPosts" asp-action="Index">
                     <span class="icon-holder">
                         <i class="anticon anticon-pie-chart"></i>
                     </span>
-                    <span class="title">Quản lý tin tức</span>
-                    <span class="arrow">
-                        <i class="arrow-icon"></i>
-                    </span>
+                    <span class="title">Quản lý bài viết</span>
                 </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a asp-area="Admin" asp-controller="AdminTblPosts" asp-action="Index">Quản lý tin tức</a>
-                    </li>             
-                </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="javascript:void(0);">
+            <li class="nav-item">
+                <a class="dropdown-toggle" asp-area="Admin" asp-controller="AdminTblPages" asp-action="Index">
                     <span class="icon-holder">
                         <i class="anticon anticon-file"></i>
                     </span>
-                    <span class="title">Quản lý Pages</span>
-                    <span class="arrow">
-                        <i class="arrow-icon"></i>
-                    </span>
+                    <span class="title">Quản lý trang</span>
                 </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a asp-area="Admin" asp-controller="AdminTblPages" asp-action="Index">Danh sách Page</a>
-                    </li>                   
-                </ul>
             </li>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="javascript:void(0);">

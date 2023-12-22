@@ -1,0 +1,73 @@
+﻿@model List<TblProduct>
+
+@{
+    int a = 1;
+}
+
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+        <tr id="tr_@item.ProductId">
+            @*  <td>
+        @item.ProductId
+        </td> *@
+            <td>@(a++)</td>
+            <td>
+                <div class="d-flex align-items-center">
+                    <img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
+                    <h6 class="m-b-0 m-l-10">@item.ProductName</h6>
+                </div>
+            </td>
+
+            <td>
+                @item.Cat.CatName
+            </td>
+
+            <td>
+                @item.Price.Value.ToString("#,##0") VNĐ
+            </td>
+            <td>
+                @if (item.UnitsInStock.Value > 0)
+                {
+                    <div class="d-flex align-items-center">
+                        <div class="badge badge-success badge-dot m-r-10"></div>
+                        <div>In Stock</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex align-items-center">
+                        <div class="badge badge-success badge-dot m-r-10"></div>
+                        <div> Out Stock</div>
+                    </div>
+                }
+
+            </td>
+            <td>
+                @if (item.Active)
+                {
+                    <div class="d-flex align-items-center">
+                        <div class="badge badge-success badge-dot m-r-10"></div>
+                        <div>Active</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex align-items-center">
+                        <div class="badge badge-success badge-dot m-r-10"></div>
+                        <div>Inactive</div>
+                    </div>
+                }
+            </td>
+            <td>
+                <a class="btn btn-primary m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.ProductId">View</a>
+                <a class="btn btn-secondary m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a>
+                <a class="btn btn-success m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+    }
+}
+
+
+

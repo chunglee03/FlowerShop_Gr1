@@ -1,4 +1,6 @@
-﻿namespace adminFlowerShop_Gr1.Helpper
+﻿using System.Text.RegularExpressions;
+
+namespace adminFlowerShop_Gr1.Helpper
 {
     public class Utilities
     {
@@ -6,32 +8,38 @@
         //{
         //throw new NotImplementedException();
         //}
-
-        internal static string SEOUrl(string input)
+        public static void CreateIfMissing(string path)
         {
-            if (string.IsNullOrEmpty(input))
-            {
-                return input;
-            }
-
-            // Loại bỏ các ký tự không hợp lệ trong URL
-            string cleanedInput = RemoveInvalidUrlCharacters(input);
-
-            // Thay thế khoảng trắng bằng dấu gạch ngang
-            string seoFriendlyUrl = cleanedInput.Replace(" ", "-");
-
-            return seoFriendlyUrl;
+            bool exist = Directory.Exists(path);
+            if (!exist)
+                Directory.CreateDirectory(path);
         }
-
-        internal static string RemoveInvalidUrlCharacters(string input)
+        public static string SEOUrl(string url)
         {
-            // Triển khai logic loại bỏ các ký tự không hợp lệ trong URL ở đây
-            // Ví dụ: loại bỏ các ký tự đặc biệt, ký tự tiếng Việt không dấu, v.v.
-            // Điều này phụ thuộc vào yêu cầu cụ thể của bạn.
+            url = url.ToLower();
+            url = Regex.Replace(url, @"[áàạảãâấầậẩẫăắằặẳẵ]", "a");
+            url = Regex.Replace(url, @"[éèẹẻẽêếềệểễ]", "e");
+            url = Regex.Replace(url, @"[óòọỏõôốồộổỗơớờợởỡ]", "o");
+            url = Regex.Replace(url, @"[úùụủũưứừựửữ]", "u");
+            url = Regex.Replace(url, @"[íìịỉĩ]", "i");
+            url = Regex.Replace(url, @"[ýỳỵỷỹ]", "y");
+            url = Regex.Replace(url, @"[đ]", "d");
 
-            // Ví dụ đơn giản: loại bỏ các ký tự đặc biệt
-            string pattern = "[^a-zA-Z0-9]";
-            return System.Text.RegularExpressions.Regex.Replace(input, pattern, "");
+            url = Regex.Replace(url.Trim(), @"[^0-9a-z-\s]", "").Trim();
+            url = Regex.Replace(url.Trim(), @"\s+", "-");
+            url = Regex.Replace(url, @"\s", "-");
+            while (true)
+            {
+                if (url.IndexOf("--") != -1)
+                {
+                    url = url.Replace("--", "-");
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return url;
         }
 
         //l static string ToTitlecase(string productName)
@@ -50,9 +58,38 @@
             return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(input.ToLower());
         }
 
-        internal static Task<string?> UploadFile(object fThumb, string v1, string v2)
+        //internal static Task<string?> UploadFile(object fThumb, string v1, string v2)
+        //{
+        //throw new NotImplementedException();
+        //}
+
+        public static async Task<string> UploadFile(Microsoft.AspNetCore.Http.IFormFile file, string sDirectory, string newName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (newName == null) newName = file.FileName;
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", sDirectory);
+                CreateIfMissing(path);
+                string pathFile = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", sDirectory, newName);
+                var supportedTypes = new[] { "jpg", "png", "jpeg", "PNG", "JPG", "JPEG", "gif" };
+                var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1);
+                if (!supportedTypes.Contains(fileExt.ToLower()))
+                {
+                    return null;
+                }
+                else
+                {
+                    using (var stream = new FileStream(pathFile, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    return newName;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
         public static string getCurrentDate()
         {

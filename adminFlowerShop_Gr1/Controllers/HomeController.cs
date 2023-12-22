@@ -23,11 +23,13 @@ namespace adminFlowerShop_Gr1.Controllers
             return View();
         }
 
+        [Route("lien-he.html", Name = "Contact")]
         public IActionResult Contact()
         {
             return View();
         }
 
+        [Route("gioi-thieu.html", Name = "About")]
         public IActionResult About()
         {
             return View();

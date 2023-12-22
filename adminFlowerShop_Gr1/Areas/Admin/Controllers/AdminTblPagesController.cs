@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using adminFlowerShop_Gr1.Models;
 using PagedList.Core;
+using adminFlowerShop_Gr1.Helpper;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
 
 namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
 {
@@ -14,10 +17,11 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
     public class AdminTblPagesController : Controller
     {
         private readonly FlowerShop_Group1Context _context;
-
-        public AdminTblPagesController(FlowerShop_Group1Context context)
+        public INotyfService _notifyService { get; }
+        public AdminTblPagesController(FlowerShop_Group1Context context, INotyfService notifyService)
         {
             _context = context;
+            _notifyService = notifyService;
         }
 
         // GET: Admin/AdminTblPages
@@ -62,12 +66,22 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PageId,PageName,Contents,Thumb,Published,Title,MetaDesc,MetaKey,Alias,CreatedDate,Ordering")] TblPage tblPage)
+        public async Task<IActionResult> Create([Bind("PageId,PageName,Contents,Thumb,Published,Title,MetaDesc,MetaKey,Alias,CreatedDate,Ordering")] TblPage tblPage, Microsoft.AspNetCore.Http.IFormFile fThumb)
         {
+            // xu ly thumb
             if (ModelState.IsValid)
             {
+                if (fThumb != null)
+                {
+                    string extension = Path.GetExtension(fThumb.FileName);
+                    string imageName = Utilities.SEOUrl(tblPage.PageName) + extension;
+                    tblPage.Thumb = await Utilities.UploadFile(fThumb, @"pages", imageName.ToLower());
+                }
+                if (string.IsNullOrEmpty(tblPage.Thumb)) tblPage.Thumb = "default.jpg";
+                tblPage.Alias = Utilities.SEOUrl(tblPage.PageName);
                 _context.Add(tblPage);
                 await _context.SaveChangesAsync();
+                _notifyService.Success("Thêm mới thành công");
                 return RedirectToAction(nameof(Index));
             }
             return View(tblPage);
@@ -94,7 +108,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PageId,PageName,Contents,Thumb,Published,Title,MetaDesc,MetaKey,Alias,CreatedDate,Ordering")] TblPage tblPage)
+        public async Task<IActionResult> Edit(int id, [Bind("PageId,PageName,Contents,Thumb,Published,Title,MetaDesc,MetaKey,Alias,CreatedDate,Ordering")] TblPage tblPage, Microsoft.AspNetCore.Http.IFormFile fThumb)
         {
             if (id != tblPage.PageId)
             {
@@ -105,8 +119,17 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
             {
                 try
                 {
+                        if (fThumb != null)
+                        {
+                            string extension = Path.GetExtension(fThumb.FileName);
+                            string imageName = Utilities.SEOUrl(tblPage.PageName) + extension;
+                            tblPage.Thumb = await Utilities.UploadFile(fThumb, @"pages", imageName.ToLower());
+                        }
+                        if (string.IsNullOrEmpty(tblPage.Thumb)) tblPage.Thumb = "default.jpg";
+                    tblPage.Alias = Utilities.SEOUrl(tblPage.PageName);
                     _context.Update(tblPage);
                     await _context.SaveChangesAsync();
+                    _notifyService.Success("Cập nhật thành công");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -158,6 +181,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
             }
             
             await _context.SaveChangesAsync();
+            _notifyService.Success("Xóa thành công");
             return RedirectToAction(nameof(Index));
         }
 

@@ -108,14 +108,14 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,ShortDesc,Description,CatId,Price,Discount,Thumb,Video,DateCreated,DateModified,BestSellers,HomeFlag,Active,Tags,Title,Alias,MetaDesc,MetaKey,UnitsInStock")] TblProduct tblProduct)
+        public async Task<IActionResult> Create([Bind("ProductId,ProductName,ShortDesc,Description,CatId,Price,Discount,Thumb,Video,DateCreated,DateModified,BestSellers,HomeFlag,Active,Tags,Title,Alias,MetaDesc,MetaKey,UnitsInStock")] TblProduct tblProduct, Microsoft.AspNetCore.Http.IFormFile fThumb)
         {
             if (ModelState.IsValid)
             {
                 tblProduct.ProductName = Utilities.ToTitlecase(tblProduct.ProductName);
                 if (fThumb != null)
                 { 
-                    
+                    string extension = Path.GetExtension(fThumb.FileName);
                     string image = Utilities.SEOUrl(tblProduct.ProductName) + extension;
                     tblProduct.Thumb = await Utilities.UploadFile(fThumb, @"products", image.ToLower());
                 }
@@ -123,9 +123,10 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
                 tblProduct.Alias = Utilities.SEOUrl(tblProduct.ProductName);
                 tblProduct.DateModified = DateTime.Now;
                 tblProduct.DateCreated = DateTime.Now;
+
                 _context.Add(tblProduct);
                 await _context.SaveChangesAsync();
-                _notifyService.Success("Cập nhật thành công");
+                _notifyService.Success("Thêm mới thành công");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DanhMuc"] = new SelectList(_context.TblCategories, "CatId", "CatName", tblProduct.CatId);
@@ -145,7 +146,7 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["DanhMuc"] = new SelectList(_context.TblCategories, "CatId", "CatName", tblProduct.CatId);
+            ViewData["CatId"] = new SelectList(_context.TblCategories, "CatId", "CatName");
             return View(tblProduct);
             
         }
@@ -171,15 +172,17 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
                     tblProduct.ProductName = Utilities.ToTitlecase(tblProduct.ProductName);
                     if (fThumb != null)
                     {
-
+                        string extension = Path.GetExtension(fThumb.FileName);
                         string image = Utilities.SEOUrl(tblProduct.ProductName) + extension;
                         tblProduct.Thumb = await Utilities.UploadFile(fThumb, @"products", image.ToLower());
                     }
                     if (string.IsNullOrEmpty(tblProduct.Thumb)) tblProduct.Thumb = "default.jpg";
                     tblProduct.Alias = Utilities.SEOUrl(tblProduct.ProductName);
                     tblProduct.DateModified = DateTime.Now;
+
                     _context.Update(tblProduct);
                     _notifyService.Success("Cập nhật thành công");
+                    ViewData["DanhMuc"] = new SelectList(_context.TblCategories, "CatId", "CatName", tblProduct.CatId);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -195,7 +198,6 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DanhMuc"] = new SelectList(_context.TblCategories, "CatId", "CatName", tblProduct.CatId);
             return View(tblProduct);
         }
 

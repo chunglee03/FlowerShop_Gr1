@@ -26,7 +26,7 @@ namespace adminFlowerShop_Gr1.Models
         public virtual DbSet<TblOrderDetail> TblOrderDetails { get; set; } = null!;
         public virtual DbSet<TblPage> TblPages { get; set; } = null!;
         public virtual DbSet<TblPost> TblPosts { get; set; } = null!;
-        public virtual DbSet<TblProduct> TblProducts { get; set; } = null!;
+        public virtual DbSet<TblProduct> TblProducts { get; set; }
         public virtual DbSet<TblRole> TblRoles { get; set; } = null!;
         public virtual DbSet<TblShipper> TblShippers { get; set; } = null!;
         public virtual DbSet<TblTransactStatus> TblTransactStatuses { get; set; } = null!;
@@ -36,7 +36,7 @@ namespace adminFlowerShop_Gr1.Models
             if (!optionsBuilder.IsConfigured)
             {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-URI2OAJ\\SQLEXPRESS;Database=FlowerShop_Group1;Integrated Security=True;");
+                optionsBuilder.UseSqlServer("Data Source=LAPTOP-OFCHUNG\\SQLEXPRESS;Initial Catalog=FlowerShop_Group1;Integrated Security=True;TrustServerCertificate=True");
             }
         }
 
