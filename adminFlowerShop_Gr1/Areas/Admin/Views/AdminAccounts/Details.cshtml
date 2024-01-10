@@ -1,73 +1,63 @@
 ﻿@model adminFlowerShop_Gr1.Models.TblAccount
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Thông tin tài khoản" + Model.FullName;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 
-
-<div>
-    <h4>Thông tin Accounts</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Salt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Salt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Active)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastLogin)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastLogin)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreateDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Role)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Role.RoleId)
-        </dd>
-    </dl>
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <a class="breadcrumb-item" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Index">Danh sách tài khoản</a>
+            <span class="breadcrumb-item active">Thông tin tài khoản : @Model.FullName</span>
+        </nav>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.AccountId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Thông tin tài khoản : @Model.FullName</h4>
+        <div class="table-responsive">
+            <table class="product-info-table m-t-20">
+                <tbody>
+                    <tr>
+                        <td>ID:</td>
+                        <td class="text-dark font-weight-semibold">@Model.AccountId</td>
+                    </tr>
+                    <tr>
+                        <td>Tên tài khoản:</td>
+                        <td>@Model.FullName</td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>@Model.Email</td>
+                    </tr>
+                    <tr>
+                        <td>Số điện thoại:</td>
+                        <td>@Model.Phone</td>
+                    </tr>
+                    <tr>
+                        <td>Active:</td>
+                        <td>
+                            @if (@Model.Active)
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" id="switch-1" checked="">
+                                    <label for="switch-1"></label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="switch m-r-10">
+                                    <input type="checkbox" id="switch-2">
+                                    <label for="switch-2"></label>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

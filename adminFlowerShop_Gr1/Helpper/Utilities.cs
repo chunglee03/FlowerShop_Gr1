@@ -149,11 +149,6 @@ namespace adminFlowerShop_Gr1.Helpper
                 str = MD5Hash(str + "_" + str);
             return str;
         }
-
-        internal static string MD5Password(object password)
-        {
-            throw new NotImplementedException();
-        }
         public static bool IsLogin()
         {
             if (string.IsNullOrEmpty(Utilities._UserName) || string.IsNullOrEmpty(Utilities._Email) || (Utilities._UserID <= 0))

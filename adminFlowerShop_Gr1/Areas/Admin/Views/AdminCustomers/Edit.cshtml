@@ -1,11 +1,71 @@
 ﻿@model adminFlowerShop_Gr1.Models.TblCustomer
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Chỉnh sửa thông tin khách hàng";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Edit</h1>
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Danh sách khách hàng</a>
+            <span class="breadcrumb-item active">Chỉnh sửa thông tin khách hàng</span>
+        </nav>
+    </div>
+</div>
+<form asp-action="Edit" asp-route-id="@Model.CustomerId" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="CustomerId" />
+    <div class="form-group">
+        <div class="form-group col-md-6">
+            <label class="col-sm-2 col-form-label">Tên khách hàng</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="FullName" placeholder="Tên tài khoản">
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="col-sm-2 col-form-label">Ngày sinh</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="Birthday" placeholder="Ngày sinh">
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="col-sm-2 col-form-label">Địa chỉ</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="Address" placeholder="Địa chỉ">
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="Email" placeholder="Email">
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="col-sm-2 col-form-label">Số điện thoại</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="Phone" placeholder="Số điện thoại">
+            </div>
+        </div>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+            </label>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+@*
+    <h1>Edit</h1>
 
 <h4>TblCustomer</h4>
 <hr />
@@ -94,4 +154,6 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+*@
 
