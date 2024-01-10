@@ -48,8 +48,8 @@
                                             <div class="blog-text">
                                                 <h4><a href="@url">@item.Title</a></h4>
                                                 <div class="blog-post-info">
-                                                    <span><a href="@url">By admin</a></span>
-                                                    <span>@item.CreatedDate.Value.ToShortDateString</span>
+                                                    <span><a href="@url">@item.Author</a></span>
+                                                    <span>@item.CreatedDate.Value.ToString("dd/MM/yyyy")</span>
                                                 </div>
                                                 <p>@item.Scontents</p>
                                                 <a href="@url" class="readmore">Xem thêm <i class="fa fa-long-arrow-right"></i></a>
@@ -85,7 +85,7 @@
                                         </li>
                                     }
 
-                                    <li class="current"><a href="/blog.html?page=@PageCurrent">@PageCurrent</li>
+                                    <li class="current"><a href="/blog.html?page=@PageCurrent">@PageCurrent</a></li>
                                     <li><a href="/blog.html?page=@PageNext">@PageNext</a></li>
                                     <li>
                                         <a href="/blog.html?page=@PageNext" aria-label="Next">

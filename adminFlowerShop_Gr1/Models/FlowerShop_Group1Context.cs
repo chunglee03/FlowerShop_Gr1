@@ -16,6 +16,7 @@ namespace adminFlowerShop_Gr1.Models
         {
         }
 
+        public virtual DbSet<Menu> Menus { get; set; } = null!;
         public virtual DbSet<TblAccount> TblAccounts { get; set; } = null!;
         public virtual DbSet<TblAttribute> TblAttributes { get; set; } = null!;
         public virtual DbSet<TblAttributesPrice> TblAttributesPrices { get; set; } = null!;
@@ -26,7 +27,7 @@ namespace adminFlowerShop_Gr1.Models
         public virtual DbSet<TblOrderDetail> TblOrderDetails { get; set; } = null!;
         public virtual DbSet<TblPage> TblPages { get; set; } = null!;
         public virtual DbSet<TblPost> TblPosts { get; set; } = null!;
-        public virtual DbSet<TblProduct> TblProducts { get; set; }
+        public virtual DbSet<TblProduct> TblProducts { get; set; } = null!;
         public virtual DbSet<TblRole> TblRoles { get; set; } = null!;
         public virtual DbSet<TblShipper> TblShippers { get; set; } = null!;
         public virtual DbSet<TblTransactStatus> TblTransactStatuses { get; set; } = null!;
@@ -35,16 +36,34 @@ namespace adminFlowerShop_Gr1.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=LAPTOP-OFCHUNG\\SQLEXPRESS;Initial Catalog=FlowerShop_Group1;Integrated Security=True;TrustServerCertificate=True");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=DESKTOP-URI2OAJ\\SQLEXPRESS;Database=FlowerShop_Group1;Integrated Security=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Menu>(entity =>
+            {
+                entity.ToTable("Menu");
+
+                entity.Property(e => e.MenuId).HasColumnName("MenuID");
+
+                entity.Property(e => e.ActionName).HasMaxLength(40);
+
+                entity.Property(e => e.ControllerName).HasMaxLength(40);
+
+                entity.Property(e => e.Link).HasMaxLength(50);
+
+                entity.Property(e => e.MenuName).HasMaxLength(35);
+
+                entity.Property(e => e.ParentId).HasColumnName("ParentID");
+            });
+
             modelBuilder.Entity<TblAccount>(entity =>
             {
-                entity.HasKey(e => e.AccountId);
+                entity.HasKey(e => e.AccountId)
+                    .HasName("PK__tblAccou__349DA5868D2A4F1B");
 
                 entity.ToTable("tblAccount");
 
@@ -73,12 +92,13 @@ namespace adminFlowerShop_Gr1.Models
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.TblAccounts)
                     .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK_tblAccount_tblRoles");
+                    .HasConstraintName("FK_tblAccount_tblRoles1");
             });
 
             modelBuilder.Entity<TblAttribute>(entity =>
             {
-                entity.HasKey(e => e.AttributeId);
+                entity.HasKey(e => e.AttributeId)
+                    .HasName("PK__tblAttri__C189298A134EB68A");
 
                 entity.ToTable("tblAttributes");
 
@@ -89,7 +109,8 @@ namespace adminFlowerShop_Gr1.Models
 
             modelBuilder.Entity<TblAttributesPrice>(entity =>
             {
-                entity.HasKey(e => e.AttributesPriceId);
+                entity.HasKey(e => e.AttributesPriceId)
+                    .HasName("PK__tblAttri__699F045CF9B67DBB");
 
                 entity.ToTable("tblAttributesPrices");
 
@@ -112,7 +133,8 @@ namespace adminFlowerShop_Gr1.Models
 
             modelBuilder.Entity<TblCategory>(entity =>
             {
-                entity.HasKey(e => e.CatId);
+                entity.HasKey(e => e.CatId)
+                    .HasName("PK__tblCateg__6A1C8ADA2E3A8878");
 
                 entity.ToTable("tblCategories");
 
@@ -137,7 +159,8 @@ namespace adminFlowerShop_Gr1.Models
 
             modelBuilder.Entity<TblCustomer>(entity =>
             {
-                entity.HasKey(e => e.CustomerId);
+                entity.HasKey(e => e.CustomerId)
+                    .HasName("PK__tblCusto__A4AE64B8FC906026");
 
                 entity.ToTable("tblCustomers");
 
@@ -163,9 +186,7 @@ namespace adminFlowerShop_Gr1.Models
 
                 entity.Property(e => e.Password).HasMaxLength(50);
 
-                entity.Property(e => e.Phone)
-                    .HasMaxLength(12)
-                    .IsUnicode(false);
+                entity.Property(e => e.Phone).HasMaxLength(12);
 
                 entity.Property(e => e.Salt)
                     .HasMaxLength(8)
@@ -179,7 +200,8 @@ namespace adminFlowerShop_Gr1.Models
 
             modelBuilder.Entity<TblLocation>(entity =>
             {
-                entity.HasKey(e => e.LocationId);
+                entity.HasKey(e => e.LocationId)
+                    .HasName("PK__tblLocat__E7FEA47765A3952C");
 
                 entity.ToTable("tblLocations");
 
@@ -198,7 +220,8 @@ namespace adminFlowerShop_Gr1.Models
 
             modelBuilder.Entity<TblOrder>(entity =>
             {
-                entity.HasKey(e => e.OrderId);
+                entity.HasKey(e => e.OrderId)
+                    .HasName("PK__tblOrder__C3905BAF1DD956E7");
 
                 entity.ToTable("tblOrders");
 
@@ -229,7 +252,8 @@ namespace adminFlowerShop_Gr1.Models
 
             modelBuilder.Entity<TblOrderDetail>(entity =>
             {
-                entity.HasKey(e => e.OrderDetailId);
+                entity.HasKey(e => e.OrderDetailId)
+                    .HasName("PK__tblOrder__D3B9D30CEBEE0EFC");
 
                 entity.ToTable("tblOrderDetails");
 
@@ -254,7 +278,8 @@ namespace adminFlowerShop_Gr1.Models
 
             modelBuilder.Entity<TblPage>(entity =>
             {
-                entity.HasKey(e => e.PageId);
+                entity.HasKey(e => e.PageId)
+                    .HasName("PK__tblPages__C565B124C9FB2C52");
 
                 entity.ToTable("tblPages");
 
@@ -277,7 +302,8 @@ namespace adminFlowerShop_Gr1.Models
 
             modelBuilder.Entity<TblPost>(entity =>
             {
-                entity.HasKey(e => e.PostId);
+                entity.HasKey(e => e.PostId)
+                    .HasName("PK__tblPost__C3905BAFF3BD2E10");
 
                 entity.ToTable("tblPost");
 
@@ -292,8 +318,6 @@ namespace adminFlowerShop_Gr1.Models
                 entity.Property(e => e.CatId).HasColumnName("CatID");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.IsHot).HasColumnName("isHot");
 
                 entity.Property(e => e.IsNewFeed).HasColumnName("isNewFeed");
 
@@ -310,7 +334,7 @@ namespace adminFlowerShop_Gr1.Models
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.TblPosts)
                     .HasForeignKey(d => d.AccountId)
-                    .HasConstraintName("FK_tblPost_tblAccount");
+                    .HasConstraintName("FK_tblPost_tblAccount2");
 
                 entity.HasOne(d => d.Cat)
                     .WithMany(p => p.TblPosts)
@@ -320,7 +344,8 @@ namespace adminFlowerShop_Gr1.Models
 
             modelBuilder.Entity<TblProduct>(entity =>
             {
-                entity.HasKey(e => e.ProductId);
+                entity.HasKey(e => e.ProductId)
+                    .HasName("PK__tblProdu__B40CC6ED4070F89F");
 
                 entity.ToTable("tblProducts");
 
@@ -332,11 +357,15 @@ namespace adminFlowerShop_Gr1.Models
 
                 entity.Property(e => e.DateCreated).HasColumnType("datetime");
 
-                entity.Property(e => e.DateModified).HasColumnType("datetime");
+                entity.Property(e => e.DateModified)
+                    .HasColumnType("datetime")
+                    .HasColumnName("dateModified");
 
                 entity.Property(e => e.MetaDesc).HasMaxLength(255);
 
-                entity.Property(e => e.MetaKey).HasMaxLength(255);
+                entity.Property(e => e.MetaKey)
+                    .HasMaxLength(255)
+                    .HasColumnName("metaKey");
 
                 entity.Property(e => e.ProductName).HasMaxLength(255);
 
@@ -351,12 +380,13 @@ namespace adminFlowerShop_Gr1.Models
                 entity.HasOne(d => d.Cat)
                     .WithMany(p => p.TblProducts)
                     .HasForeignKey(d => d.CatId)
-                    .HasConstraintName("FK_tblProducts_tblCategories");
+                    .HasConstraintName("FK_tblProducts_tblCategories1");
             });
 
             modelBuilder.Entity<TblRole>(entity =>
             {
-                entity.HasKey(e => e.RoleId);
+                entity.HasKey(e => e.RoleId)
+                    .HasName("PK__tblRoles__8AFACE3AF37849BD");
 
                 entity.ToTable("tblRoles");
 
@@ -369,7 +399,8 @@ namespace adminFlowerShop_Gr1.Models
 
             modelBuilder.Entity<TblShipper>(entity =>
             {
-                entity.HasKey(e => e.ShipperId);
+                entity.HasKey(e => e.ShipperId)
+                    .HasName("PK__tblShipp__1F8AFFB99183DCA2");
 
                 entity.ToTable("tblShippers");
 
@@ -388,7 +419,8 @@ namespace adminFlowerShop_Gr1.Models
 
             modelBuilder.Entity<TblTransactStatus>(entity =>
             {
-                entity.HasKey(e => e.TransactStatusId);
+                entity.HasKey(e => e.TransactStatusId)
+                    .HasName("PK__tblTrans__C8BCD276D83B5F69");
 
                 entity.ToTable("tblTransactStatus");
 

@@ -28,14 +28,11 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
             _notifyService = notifyService;
         }
 
-        // GET: Admin/AdminProducts
-        //public async Task<IActionResult> Index()
-        //{
-        //    var flowerShop_Group1Context = _context.TblProducts.Include(t => t.Cat);
-        //    return View(await flowerShop_Group1Context.ToListAsync());
-        //}
+    
         public IActionResult Index(int page=1,int CatID=0)
         {
+            if (!Utilities.IsLogin())
+                return RedirectToAction("Index", "Login");
             var pageNumber = page;
             var pageSize = 20;
 

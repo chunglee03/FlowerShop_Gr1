@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using adminFlowerShop_Gr1.Models;
 using PagedList.Core;
+using adminFlowerShop_Gr1.Helpper;
 
 namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
 {
@@ -28,6 +29,8 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
         //}
         public IActionResult Index(int? page)
         {
+            if (!Utilities.IsLogin())
+                return RedirectToAction("Index", "Login");
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 20;
             var IsCustomers = _context.TblCustomers

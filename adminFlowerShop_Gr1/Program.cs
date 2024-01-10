@@ -1,8 +1,12 @@
 using adminFlowerShop_Gr1.Models;
 using AspNetCoreHero.ToastNotification;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
+
 using System.Text.Unicode;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +16,13 @@ var stringConnectdb = builder.Configuration.GetConnectionString("dbFlowerShop");
 builder.Services.AddDbContext<FlowerShop_Group1Context>(options => options.UseSqlServer(stringConnectdb));
 
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
+builder.Services.AddSession();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(p =>
+    {
+        p.LoginPath = "/dangnhap.html";
+        p.AccessDeniedPath = "/";
+    });
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
@@ -30,9 +41,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>

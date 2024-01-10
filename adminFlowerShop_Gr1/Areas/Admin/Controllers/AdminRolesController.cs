@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using adminFlowerShop_Gr1.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using adminFlowerShop_Gr1.Helpper;
 
 namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
 {
@@ -25,7 +26,9 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
         // GET: Admin/AdminRoles
         public async Task<IActionResult> Index()
         {
-              return _context.TblRoles != null ? 
+            if (!Utilities.IsLogin())
+                return RedirectToAction("Index", "Login");
+            return _context.TblRoles != null ? 
                           View(await _context.TblRoles.ToListAsync()) :
                           Problem("Entity set 'FlowerShop_Group1Context.TblRoles'  is null.");
         }

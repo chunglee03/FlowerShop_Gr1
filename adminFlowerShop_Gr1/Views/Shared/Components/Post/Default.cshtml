@@ -1,0 +1,47 @@
+﻿@using adminFlowerShop_Gr1.Models;
+@using adminFlowerShop_Gr1.Helpper;
+@model IList<TblPost>
+
+<div class="blog-post-area mt-text-3">
+    <div class="container custom-area">
+        <div class="row">
+            <!--Section Title Start-->
+            <div class="col-12">
+                <div class="section-title text-center mb-30">
+                    <span class="section-title-1">From The Blogs</span>
+                    <h3 class="section-title-3">Our Latest Posts</h3>
+                </div>
+            </div>
+            <!--Section Title End-->
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                string url = $"/bai-viet/{item.Alias}-{item.PostId}.html";
+                <div class="col-12 col-md-4 col-lg-4 col-custom mb-30">
+                    <div class="blog-lst">
+                        <div class="single-blog">
+                            <div class="blog-image">
+                                <a class="d-block" href="@url">
+                                    <img src="~/images/post/@item.Thumb" alt="Blog Image" class="w-100">
+                                </a>
+                            </div>
+                            <div class="blog-content">
+                                <div class="blog-text">
+                                    <h4><a href="@url">@item.Title</a></h4>
+                                    <div class="blog-post-info">
+                                        <span><a href="#">@item.Author</a></span>
+                                        <span>@item.CreatedDate.Value.ToString("dd-MM-yyyy")</span>
+                                    </div>
+
+									<p>@item.Contents</p>
+                                    <a href="@url" class="readmore">Read More <i class="fa fa-long-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

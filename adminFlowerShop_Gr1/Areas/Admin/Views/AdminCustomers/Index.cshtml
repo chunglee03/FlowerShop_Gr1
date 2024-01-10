@@ -44,7 +44,7 @@
                         <th>Số điện thoại</th>
                         <th>Email</th>
                         <th>Địa chỉ</th>
-                        <th>Tỉnh/thành</th>
+                        
                         <th>#</th>
                     </tr>
                 </thead>
@@ -63,7 +63,7 @@
                             <td>@item.Email</td>
 
                             <td>@item.Address</td>
-                            <td>@item.Location.Name</td>
+                            @* <td>@item.Location.Name</td> *@
 
                             <td>
                                 <a class="btn btn-primary m-r-5" asp-area="Admin" asp-controller="AdminCustomers" asp-action="Details" asp-route-id="@item.CustomerId">View</a>

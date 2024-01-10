@@ -1,11 +1,40 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace adminFlowerShop_Gr1.Helpper
 {
-    public class Utilities
+    public static class Utilities
     {
+        public static bool IsValidEmail(string email)
+        {
+            if (email.Trim().EndsWith("."))
+            {
+                return false;
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         //internal static string SEOUrl(string productName)
         //{
+        public static string GetRandomKey(int length = 5)
+        {
+            string pattern = @"0123456789zxcvbnmasdfghjklqwertyuiop[]{}:~!#$%^&*()+";
+            Random rd = new Random();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < length; i++)
+            {
+                sb.Append(pattern[rd.Next(0, pattern.Length)]);
+            }
+            return sb.ToString();
+        }
         //throw new NotImplementedException();
         //}
         public static void CreateIfMissing(string path)
@@ -94,6 +123,42 @@ namespace adminFlowerShop_Gr1.Helpper
         public static string getCurrentDate()
         {
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
+        public static int _UserID = 0;
+        public static string _UserName = String.Empty;
+        public static string _Email = string.Empty;
+        public static string _Message = string.Empty;
+        public static string _MessageEmail = String.Empty;
+        public static string MD5Hash(string text)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
+            byte[] result = md5.Hash;
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                strBuilder.Append(result[i].ToString("x2"));
+            }
+            return strBuilder.ToString();
+        }
+        public static string MD5Password(string? text)
+        {
+            string str = MD5Hash(text);
+            for (int i = 0; i <= 5; i++)
+                str = MD5Hash(str + "_" + str);
+            return str;
+        }
+
+        internal static string MD5Password(object password)
+        {
+            throw new NotImplementedException();
+        }
+        public static bool IsLogin()
+        {
+            if (string.IsNullOrEmpty(Utilities._UserName) || string.IsNullOrEmpty(Utilities._Email) || (Utilities._UserID <= 0))
+                return false;
+            return true;
         }
     }
 }

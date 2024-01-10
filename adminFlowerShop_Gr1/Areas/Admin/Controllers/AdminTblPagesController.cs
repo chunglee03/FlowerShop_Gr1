@@ -27,6 +27,8 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
         // GET: Admin/AdminTblPages
         public IActionResult Index(int? page)
         {
+            if (!Utilities.IsLogin())
+                return RedirectToAction("Index", "Login");
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 20;
             var IsPages = _context.TblPages

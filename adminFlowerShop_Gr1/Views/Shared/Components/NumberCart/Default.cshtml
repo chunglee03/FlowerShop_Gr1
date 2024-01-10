@@ -1,0 +1,17 @@
+﻿@model List<adminFlowerShop_Gr1.ModelViews.CartItem>
+@if (Model != null && Model.Count() > 0)
+{
+    <a href="#" class="minicart-btn toolbar-btn">
+    <i class="fa fa-shopping-cart"></i>
+        <span class="cart-item_count">@Model.Count()</span>
+    </a>
+}
+else
+{
+    <a href="#" class="minicart-btn toolbar-btn">
+        <i class="fa fa-shopping-cart"></i>
+        
+    </a>
+}
+
+

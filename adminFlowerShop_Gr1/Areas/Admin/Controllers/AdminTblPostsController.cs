@@ -27,6 +27,8 @@ namespace adminFlowerShop_Gr1.Areas.Admin.Controllers
         // GET: Admin/AdminTblPosts
         public IActionResult Index(int? page)
         {
+            if (!Utilities.IsLogin())
+                return RedirectToAction("Index", "Login");
             var collection = _context.TblPosts.ToList();
             foreach (var item in collection)
             {

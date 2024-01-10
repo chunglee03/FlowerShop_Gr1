@@ -1,0 +1,22 @@
+﻿@model IEnumerable<adminFlowerShop_Gr1.Models.Menu>
+@foreach (var item in Model.Where(i => i.Levels == 1))
+{
+    var parentId = item.MenuId;
+    var menuChild = Model.Where(i => i.ParentId == parentId);
+    <li class="drop-holder">
+        <a href="@item.Link">
+            <span class="menu-text"> @item.MenuName</span>
+        </a>
+        @if (menuChild.Count() != 0)
+        {
+            <ul class="dropdown-submenu dropdown-hover">
+                @foreach (var itemChild in menuChild)
+                {
+                    <li>
+                        <a href="@itemChild.Link">@itemChild.MenuName</a>
+                    </li>
+                }
+            </ul>
+        }
+    </li>
+} 
